@@ -1,25 +1,55 @@
-import logo from './logo.svg';
+import React from 'react'
 import './App.css';
 
-function App() {
+class App extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      error: null,
+      isLoaded: false,
+      q: []
+    }
+  }
+  componentDidMount() {
+    fetch('https://simpsons-quotes-api.herokuapp.com/quotes')
+      .then(data => data.json())
+      .then(
+        (q) => {
+          this.setState({ isLoaded: true, q })
+        },
+        (error) => {
+          console.log('mostrando el error:',error);
+          this.setState({ isLoaded: false, error })
+        })
+  }
+  render() {
+    const { error, isLoaded, q } = this.state
+    if (error) {
+      return <div className="error">Error: {error}</div>
+    } else if (!isLoaded) {
+      return (
+        <div className="loading">
+          <Loader />
+        </div>);
+    } else {
+      return (
+        <div className="main">
+          <div className="boxImg">
+            <img src={q[0].image} alt={q[0].character} />
+          </div>
+          <h1 className="character">{q[0].character}</h1>
+          <p className="quote">{q[0].quote}</p>
+          <button className="getQuote" onClick={() => window.location.reload()}>Get random quote</button>
+        </div>
+      )
+    }
+  }
+}
+
+function Loader() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+    <div className="loader"></div>
+  )
 }
 
 export default App;
