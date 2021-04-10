@@ -2,7 +2,7 @@
   "name": "simpsons-quotes",
   "version": "0.1.0",
   "private": true,
-  "homepage": "https://00frank.github.com/simpsons-quotes",
+  "homepage": "https://00frank.github.io/simpsons-quotes",
   "dependencies": {
     "@testing-library/jest-dom": "^5.11.9",
     "@testing-library/react": "^11.2.3",
